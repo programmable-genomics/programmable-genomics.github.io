@@ -1,86 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programmable Genomics Laboratory | Software</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
             <div class="header-image-container">
-                 <img src="dna.png">
+                <img src="dna.png"
+                    alt="Double helix of DNA stylized to look like a pencil sketch with one nucleotide highlighted in pink to represent minimal editing.">
             </div>
             <h1>Programmable Genomics Laboratory</h1>
-            <div class="subtitle">Deep Learning • DNA Design • Regulatory Genomics</div>
+            <div class=" subtitle">Deep Learning • DNA Design • Regulatory Genomics
+            </div>
         </header>
 
         <nav>
             <a href="index.html">Home</a>
             <a href="people.html">People</a>
-            <a href="research.html">Research</a>
+            <a href="publications.html">Publications</a>
             <a href="software.html" class="active">Software</a>
+            <a href="news.html">News</a>
         </nav>
 
         <main>
             <h2>Research</h2>
-            <p>We believe in open science. All code and models developed in the Programmable Genomics Laboratory are made freely available to the research community.</p>
+            <p>We believe in open science. All code and models developed in the Programmable Genomics Laboratory are
+                made freely available to the research community.</p>
 
-
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>Ledidi</h3>
-                    <div class="subtitle">Python • PyTorch • Deep Learning • Design</div>
-                    <p>Ledidi is an algorithm for turning any predictive deep learning model into a designer of edits to an initial template sequence. The repository contains convenient functions for using one or more models of any architecture to do the design..</p>
-                    <a href="https://github.com/jmschrei/ledidi" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://www.biorxiv.org/content/10.1101/2025.04.22.650035v2" style="text-decoration: underline;">[Paper]</a>
+            <div class="software-grid">
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/ledidi', '_blank')">
+                    <div class="card-header">
+                        <h3>Ledidi</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Deep Learning</span><span>Design</span>
+                    </div>
+                    <p>Ledidi is an algorithm for turning any predictive deep learning model into a designer of edits to
+                        an initial template sequence. The repository contains convenient functions for using one or more
+                        models of any architecture to do the design.</p>
+                    <div class="card-links">
+                        <a href="https://www.biorxiv.org/content/10.1101/2025.04.22.650035v2" target="_blank"
+                            onclick="event.stopPropagation()">[Paper]</a>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>tangermeme</h3>
-                    <div class="subtitle">Python • PyTorch • Deep Learning</div>
-                    <p>A toolkit for "everything-but-the-model" when it comes to genomic machine learning. Implements algorithms for calculating feature attributions, perturbing sequences to ask hypothetical "what if?" questions, and plotting results.</p>
-                    <a href="https://github.com/jmschrei/tangermeme" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://www.biorxiv.org/content/10.1101/2025.08.08.669296v2" style="text-decoration: underline;">[Paper]</a>
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/tangermeme', '_blank')">
+                    <div class="card-header">
+                        <h3>tangermeme</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Deep Learning</span>
+                    </div>
+                    <p>A toolkit for "everything-but-the-model" when it comes to genomic machine learning. Implements
+                        algorithms for calculating feature attributions, perturbing sequences to ask hypothetical "what
+                        if?" questions, and plotting results.</p>
+                    <div class="card-links">
+                        <a href="https://www.biorxiv.org/content/10.1101/2025.08.08.669296v2" target="_blank"
+                            onclick="event.stopPropagation()">[Paper]</a>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>Avocado</h3>
-                    <div class="subtitle">Python • PyTorch • Tensor Factorization • Deep Learning</div>
-                    <p>A deep tensor factorization model for imputing genome-wide genomics and transcriptomic experiments at compendium scale. We used Avocado to impute the >10k experiments that have not yet been performed in the ENCODE Compendium, and did cross-species modeling to make imputations for assays performed in only one of the species.</p>
-                    <a href="https://github.com/jmschrei/avocado" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://link.springer.com/article/10.1186/s13059-020-01977-6" style="text-decoration: underline;">[Paper 1]</a>
-                    <a href="https://link.springer.com/article/10.1186/s13059-020-01978-5" style="text-decoration: underline;">[Paper 2]</a>
-                    <a href="https://www.biorxiv.org/content/10.1101/801183v3" style="text-decoration: underline;">[Paper 3]</a>
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/avocado', '_blank')">
+                    <div class="card-header">
+                        <h3>Avocado</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Tensor Factorization</span><span>Deep Learning</span>
+                    </div>
+                    <p>A deep tensor factorization model for imputing genome-wide genomic and transcriptomic
+                        experiments at compendium scale. We used Avocado to impute the >10k experiments that have not
+                        yet been performed in the ENCODE Compendium, and did cross-species modeling to make imputations
+                        for assays performed in only one of the species.</p>
+                    <div class="card-links">
+                        <a href="https://link.springer.com/article/10.1186/s13059-020-01977-6" target="_blank"
+                            onclick="event.stopPropagation()">[Paper 1]</a>
+                        <a href="https://link.springer.com/article/10.1186/s13059-020-01978-5" target="_blank"
+                            onclick="event.stopPropagation()">[Paper 2]</a>
+                        <a href="https://dl.acm.org/doi/10.1145/3388440.3412480" target="_blank"
+                            onclick="event.stopPropagation()">[Paper 3]</a>
+                    </div>
                 </div>
-            </div>
-            
 
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>yuzu</h3>
-                    <div class="subtitle">Python • PyTorch • Compressed Sensing • Saturation Mutagenesis</div>
-                    <p>An algorithm for acceleration saturation mutagenesis for deep learning models with convolution layers using compressed sensing. Includes a function that can be applied to any PyTorch model.</p>
-                    <a href="https://github.com/kundajelab/yuzu" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://academic.oup.com/bioinformatics/article/38/14/3557/6604724" style="text-decoration: underline;">[Paper]</a>
+                <div class="software-card" onclick="window.open('https://github.com/kundajelab/yuzu', '_blank')">
+                    <div class="card-header">
+                        <h3>yuzu</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Compressed Sensing</span><span>Saturation Mutagenesis</span>
+                    </div>
+                    <p>An algorithm for accelerating saturation mutagenesis for deep learning models with convolution
+                        layers using compressed sensing. Includes a function that can be applied to any PyTorch model.
+                    </p>
+                    <div class="card-links">
+                        <a href="https://academic.oup.com/bioinformatics/article/38/14/3557/6604724" target="_blank"
+                            onclick="event.stopPropagation()">[Paper]</a>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>dragonnfruit</h3>
-                    <div class="subtitle">Python • PyTorch • Single-Cell Genomics • Deep Learning</div>
-                    <p>DragoNNFruit is an extension of the ChromBPNet model that makes predictions for chromatin accessibility at dynamic pseudobulk resolution. This enables datasets to be modeled without the need to pseudobulk cells or scrub outliers. Project is incomplete.</p>
-                    <a href="https://github.com/jmschrei/dragonnfruit" style="text-decoration: underline;">[GitHub]</a>
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/dragonnfruit', '_blank')">
+                    <div class="card-header">
+                        <h3>dragonnfruit</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Single-Cell Genomics</span><span>Deep Learning</span>
+                    </div>
+                    <p>DragoNNFruit is an extension of the ChromBPNet model that makes predictions for chromatin
+                        accessibility at dynamic pseudobulk resolution. This enables datasets to be modeled without the
+                        need to pseudobulk cells or scrub outliers. Work is ongoing.</p>
+                    <div class="card-links">
+                    </div>
                 </div>
             </div>
 
@@ -88,27 +152,55 @@
             <br><br><br>
             <h2>General Purpose ML Software</h2>
 
-            Some of the software developed by the group is general purpose in the sense that the algorithms can be applied in any domain, not just genomics. 
+            <p>Some of the software developed by the group is general purpose in the sense that the algorithms can be
+                applied in any domain, not just genomics.</p>
 
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>pomegranate</h3>
-                    <div class="subtitle">Python • PyTorch • Probabilistic Modeling</div>
-                    <p>pomegranate implements general-purpose probabilistic modeling in PyTorch including hidden Markov models, Bayesian networks, and factor graphs. pomegranate treats all models as probability distributions, enabling one to create a mixture model of hidden Markov models instead of only allowing simple distributions. Because it is implemented in PyTorch, the fitting and inference steps can use a GPU and all other features implemented in PyTorch, e.g. mixed precision, compiling of models, etc. </p>
-                    <a href="https://github.com/jmschrei/pomegranate" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://jmlr.org/papers/volume18/17-636/17-636.pdf" style="text-decoration: underline;">[Paper]</a>
+            <div class="software-grid">
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/pomegranate', '_blank')">
+                    <div class="card-header">
+                        <h3>pomegranate</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Probabilistic Modeling</span>
+                    </div>
+                    <p>Pomegranate implements general-purpose probabilistic modeling in PyTorch including hidden Markov
+                        models, Bayesian networks, and factor graphs. Pomegranate treats all models as probability
+                        distributions, enabling one to create a mixture model of hidden Markov models instead of only
+                        allowing simple distributions. Because it is implemented in PyTorch, the fitting and inference
+                        steps can use a GPU and all other features implemented in PyTorch, e.g. mixed precision,
+                        compiling of models, etc.</p>
+                    <div class="card-links">
+                        <a href="https://jmlr.org/papers/volume18/17-636/17-636.pdf" target="_blank"
+                            onclick="event.stopPropagation()">[Paper]</a>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>apricot</h3>
-                    <div class="subtitle">Python • numba • Submodular Optimization</div>
-                    <p>A general-purpose toolkit implementing submodular optimization for the purpose of selecting representative subsets of data. Implements several optimization algorithms and objective functions and enables users to write custom versions of either. </p>
-                    <a href="https://github.com/jmschrei/apricot" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://jmlr.org/papers/volume21/19-467/19-467.pdf" style="text-decoration: underline;">[Paper]</a>
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/apricot', '_blank')">
+                    <div class="card-header">
+                        <h3>apricot</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Numba_logo.svg"
+                                class="numba-logo" alt="Numba">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Submodular Optimization</span>
+                    </div>
+                    <p>A general-purpose toolkit implementing submodular optimization for the purpose of selecting
+                        representative subsets of data. Implements several optimization algorithms and objective
+                        functions and enables users to write custom versions of either. </p>
+                    <div class="card-links">
+                        <a href="https://jmlr.org/papers/volume21/19-467/19-467.pdf" target="_blank"
+                            onclick="event.stopPropagation()">[Paper]</a>
+                    </div>
                 </div>
             </div>
 
@@ -116,14 +208,27 @@
             <br><br><br>
             <h2>Ecosystem Software</h2>
 
-            Below is ecosystem-level "miscellaneous" software that was developed to improve data processing in general outside the context of any specific research project.
+            <p>Below is ecosystem-level "miscellaneous" software that was developed to improve data processing in
+                general
+                outside the context of any specific research project.</p>
 
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>bam2bw</h3>
-                    <div class="subtitle">Python • High Throughput Genomics Read Mapping</div>
-                    <p>bam2bw is a simple utility for converting BAM-formatted reads into a bigwig without needing any intermediate values. bam2bw can process data either locally or remotely, and can do so using parallel processing, frequently needing only a few minutes to process even massive datasets.</p>
-                    <a href="https://github.com/jmschrei/bam2bw" style="text-decoration: underline;">[GitHub]</a>
+            <div class="software-grid">
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/bam2bw', '_blank')">
+                    <div class="card-header">
+                        <h3>bam2bw</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>High Throughput Genomics Read Mapping</span>
+                    </div>
+                    <p>Bam2bw is a simple utility for converting BAM-formatted reads into a bigwig without needing any
+                        intermediate values. bam2bw can process data either locally or remotely, and can do so using
+                        parallel processing, frequently needing only a few minutes to process even massive datasets.</p>
+                    <div class="card-links">
+                    </div>
                 </div>
             </div>
 
@@ -131,41 +236,97 @@
             <br><br><br>
             <h2>Re-implementations of Popular Algorithms</h2>
 
-            In addition to developing new algorithms, models, and software, PGL has also re-implemented some popular algorithms to make them more efficient and/or port them to a different backend because these re-implementations would be valuable for our mission. To give appropriate credit to the original work and scope our contribution solely as that of a re-implementation, these implementations use the original names with the "-lite" suffix. 
+            <p>In addition to developing new algorithms, models, and software, PGL has also re-implemented some popular
+                algorithms to make them more efficient and/or port them to a different backend because these
+                re-implementations would be valuable for our mission. To give appropriate credit to the original work
+                and
+                scope our contribution solely as that of a re-implementation, these implementations use the original
+                names
+                with the "-lite" suffix.</p>
 
+            <div class="software-grid">
+                <div class="software-card" onclick="window.open('https://github.com/jmschrei/bpnet-lite', '_blank')">
+                    <div class="card-header">
+                        <h3>bpnet-lite</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg"
+                                class="pytorch-logo" alt="PyTorch">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Deep Learning</span>
+                    </div>
+                    <p>A re-implementation of the BPNet and ChromBPNet models in PyTorch. This implementation includes a
+                        command-line interface for training, evaluating, and using these models, as well as a pipeline
+                        command that goes from unprocessed data to trained models and downstream artifacts (e.g.
+                        TF-MoDISco patterns).</p>
+                    <div class="card-links">
+                    </div>
+                </div>
 
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>bpnet-lite</h3>
-                    <div class="subtitle">Python • PyTorch • Deep Learning</div>
-                    <p>A re-implementation of the BPNet and ChromBPNet models in PyTorch. This implementation includes a command-line interface for training, evaluating, and using these models, as well as a pipeline command that goes from unprocessed data to trained models and downstream artifacts (e.g. TF-MoDISco patterns).</p>
-                    <a href="https://github.com/jmschrei/bpnet-lite" style="text-decoration: underline;">[GitHub]</a>
+                <div class="software-card"
+                    onclick="window.open('https://github.com/jmschrei/memesuite-lite', '_blank')">
+                    <div class="card-header">
+                        <h3>memesuite-lite</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Numba_logo.svg"
+                                class="numba-logo" alt="Numba">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>DNA Sequence Motifs</span>
+                    </div>
+                    <p>A re-implementation of select algorithms from the MEME suite. Currently, only FIMO and Tomtom are
+                        included and provide Python APIs. Additionally, there is a command-line tool that uses the new
+                        Tomtom implementation in various ways.</p>
+                    <div class="card-links">
+                        <a href="https://academic.oup.com/bioinformatics/article/41/11/btaf577/8297099" target="_blank"
+                            onclick="event.stopPropagation()">[Tomtom-lite Paper]</a>
+                    </div>
+                </div>
+
+                <div class="software-card"
+                    onclick="window.open('https://github.com/jmschrei/tfmodisco-lite', '_blank')">
+                    <div class="card-header">
+                        <h3>tfmodisco-lite</h3>
+                        <div class="header-logos">
+                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                                class="python-logo" alt="Python">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Numba_logo.svg"
+                                class="numba-logo" alt="Numba">
+                        </div>
+                    </div>
+                    <div class="tech-pills">
+                        <span>Motif Discovery</span>
+                    </div>
+                    <p>A re-implementation of the TF-MoDISco algorithm for motif discovery from feature attributions.
+                        This version significantly decreases the amount of memory needed, speeds it up several times
+                        over, and reduces the size of the codebase by an order of magnitude. This code has now been
+                        merged back into the official TF-MoDISco repository and improved upon.</p>
+                    <div class="card-links">
+                    </div>
                 </div>
             </div>
-
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>memesuite-lite</h3>
-                    <div class="subtitle">Python • numba • DNA Sequence Motifs</div>
-                    <p>A re-implementation of select algorithms from the MEME suite. Currently, only FIMO and Tomtom are included and provide Python APIs. Additionally, there is a command-line tool that uses the new Tomtom implementation in various ways.</p>
-                    <a href="https://github.com/jmschrei/memesuite-lite" style="text-decoration: underline;">[GitHub]</a>
-                    <a href="https://academic.oup.com/bioinformatics/article/41/11/btaf577/8297099" style="text-decoration: underline;">[Tomtom-lite Paper]</a>
-                </div>
-            </div>
-
-
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <div>
-                    <h3>tfmodisco-lite</h3>
-                    <div class="subtitle">Python • numba • Motif Discovery</div>
-                    <p>A re-implementation of the TF-MoDISco algorithm for motif discovery from feature attributions. This version significantly decreases the amount of memory needed, speeds it up several times over, and reduces the size of the codebase by an order of magnitude. This code has now been merged back into the official TF-MoDISco repository and improved upon.</p>
-                    <a href="https://github.com/jmschrei/tfmodisco-lite" style="text-decoration: underline;">[GitHub]</a>
-                </div>
-            </div>
-
 
         </main>
+
+        <footer class="site-footer">
+            <div class="footer-address">
+                Albert Sherman Center<br>
+                UMass Medical School <br>
+                55 Lake Avenue North<br>
+                Worcester, MA 01655
+            </div>
+            <a href="https://www.umassmed.edu/" target="_blank">
+                <img src="https://www.umassmed.edu/contentassets/d03ef3ad8b954c0b835e4efff6b5ba09/lightbackground_umasschanat.svg"
+                    class="footer-logo" alt="UMass Chan Medical School">
+            </a>
+        </footer>
     </div>
 </body>
+
 </html>

@@ -1,80 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programmable Genomics Laboratory | Home</title>
     <link rel="stylesheet" href="style.css">
-    
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-XXXXXXXXXX');
+        gtag('config', 'G-XXXXXXXXXX');
     </script>
 </head>
+
 <body>
     <div class="container">
         <header>
             <div class="header-image-container">
-                <img src="dna.png">
+                <img src="dna.png"
+                    alt="Double helix of DNA stylized to look like a pencil sketch with one nucleotide highlighted in pink to represent minimal editing.">
             </div>
             <h1>Programmable Genomics Laboratory</h1>
-            <div class="subtitle">Deep Learning • DNA Design • Regulatory Genomics</div>
+            <div class=" subtitle">Deep Learning • DNA Design • Regulatory Genomics
+            </div>
         </header>
 
         <nav>
             <a href="index.html" class="active">Home</a>
             <a href="people.html">People</a>
-            <a href="research.html">Research</a>
+            <a href="publications.html">Publications</a>
             <a href="software.html">Software</a>
+            <a href="news.html">News</a>
         </nav>
 
         <main>
+            <div class="hiring-box">
+                <h3>Open Positions</h3>
+                <p class="roles">
+                    We are currently seeking <strong>Graduate Students</strong>, <strong>Post-doctoral
+                        Researchers</strong> and <strong>Staff Scientists</strong>.
+                </p>
+                <p>
+                    To apply, please send your CV and a brief note (max 3 sentences) describing your background and
+                    interest to:
+                    <br>
+                    <a href="#" class="email-link" data-user="jacob.schreiber" data-domain="umassmed.edu"></a>
+                </p>
+            </div>
+
             <section id="vision">
                 <p>
-                    In the era of AI-designed proteins, the next frontier is the precise control oven <i>when</i>, <i>where</i>, and <i>how strongly</i> proteins are expressed in living cells and tissues. 
+                    In the era of AI-designed proteins, the next frontier is the precise control over <i>when</i>,
+                    <i>where</i>, and <i>how strongly</i> proteins are expressed in living cells and tissues.
                 </p>
                 <p>
-                    The <strong>Programmable Genomics Laboratory (PGL)</strong> at UMass Chan Medical School is an interdisciplinary research group bridging machine learning, synthetic biology, and regulatory genomics. We develop generalizable methods for designing regulatory elements and higher-order circuits with subtle and precise properties—enabling cell type-specific expression, transcriptional dosage control, and context-dependent production.
+                    The <strong>Programmable Genomics Laboratory (PGL)</strong> in the Department of Genomics and
+                    Computational Biology at UMass Chan Medical School is an interdisciplinary research group bridging
+                    machine learning, synthetic biology, and regulatory genomics. We develop generalizable methods for
+                    designing regulatory elements and higher-order circuits with subtle and precise properties—enabling
+                    cell type-specific expression, transcriptional dosage control, and context-dependent production. Our
+                    goal is to be able to target any cell type in any tissue, at any stage of development, for any
+                    duration, and to deliver payloads more complex than typically seen in eukaryotic genomes.
                 </p>
 
                 <p>
-                    To enable genomic design with this level of precise, PGL targets the full genomic machine learning stack. This means developing algorithms for processing genomics data, developing scalable and light-weight deep learning architectures without compromising on accuracy, and developing a broad range of computational methods for rigorously evaluating the quality and robustness of these models. Because the quality of our designs will be constrained by how faithfully the underlying deep learning models are capturing the <i>cis-</i>regulatory rules governing our targeted processes, these steps are crucial for ensuring success.
+                    To enable genomic design with this level of precision, PGL targets the full genomic machine learning
+                    stack. This means developing algorithms for processing genomics data, developing scalable and
+                    light-weight deep learning architectures without compromising on accuracy, and developing a broad
+                    range of computational methods for rigorously evaluating the quality and robustness of these models.
                 </p>
+            </section>
 
-                <p>
-                    
-                </p>
-                </section>
-
-
-                <div style="border: 1px solid black; padding: 20px; margin-top: 40px;">
-                <h3 style="margin-top: 0;">Open Positions</h3>
-                <p style="font-family: var(--font-mono); font-size: 0.9rem;">
-                    We are currently seeking <strong>Graduate Students</strong>, <strong>Post-doctoral Researchers</strong> and <strong>Staff Scientists</strong>. 
-                </p>
-                <p>
-                    To apply, please send your CV and a brief note (max 3 sentences) describing your background and interest to: 
-                    <br>
-                    <a href="mailto:jacob.schreiber@umassmed.edu" style="text-decoration: underline; font-weight: bold;">jacob.schreiber@umassmed.edu</a>
-                </p>
+            <div class="section-header">
+                <h2>Research Areas</h2>
+                <div class="line"></div>
             </div>
 
+            <div class="list-item">
+                <div>
+                    <h3>Regulatory Element & DNA Design</h3>
+                    <p>We design regulatory elements with precise and subtle properties. Our current focus is on using
+                        deep learning-based predictive models to design cell type-specific enhancers and promoters, but
+                        we are looking to go further than targeting by also controlling precise transcriptional
+                        dosage in the on-target cell type, and by minimizing the size of the regulatory elements. To
+                        this end,
+                        we have developed software for simple design algorithms and Ledidi, a method for editing initial
+                        templates to achieve desired activities.</p>
+                    <a href="https://www.biorxiv.org/content/10.1101/2025.04.22.650035v2" target="_blank">[Ledidi]</a>
+                    <a href="https://www.biorxiv.org/content/10.64898/2025.12.22.695948v1" target="_blank">[Ledidi
+                        2]</a>
+                </div>
+                <div class="photo-filler">
+                    <img src="photos/ledidi-enhancers.jpg"
+                        alt="A scientific figure showing mouse embryos containing Ledidi-designed enhancers, glowing in target cell types.">
+                </div>
+            </div>
 
+            <div class="list-item">
+                <div>
+                    <h3>Compact Deep Learning Architectures</h3>
+                    <p>In service of tackling challenging design tasks, we develop deep learning models that have
+                        fewer
+                        parameters and run faster than the current state-of-the-art without compromising on
+                        accuracy.
+                        These models will allow us to tackle more ambitious design settings where dozens, or
+                        hundreds,
+                        of cell type- or modality-specific models are needed simultaneously to control the design
+                        process. By being smaller, more models can fit in GPU memory at the same time, and by being
+                        faster,
+                        we can still perform design quickly even with that number of models.</p>
+                </div>
+                <div class="photo-filler">
+                    <img src="photos/cheri-block.jpg" alt="Diagram of a compact deep learning block">
+                </div>
+            </div>
 
-            <br>
-            <h3>Latest News</h3>
-            <hr>
-            <div class="list-item" style="grid-template-columns: 1fr;">
-                <p>
-                <strong>1/26/2026</strong> - Welcome to our first lab member, Achsah Marlene Aruva! <br>
-                <strong>11/16/2025</strong> - Our new paper on <strong><a href="https://academic.oup.com/bioinformatics/article/41/11/btaf577/8297099">tomtom-lite</a></strong> has been accepted at <i>Bioinformatics</i>.
-                </p>
+            <div class="list-item">
+                <div>
+                    <h3>Ecosystem Engineering</h3>
+                    <p>Progress in genomic machine learning has been remarkable, but is still slower than it could
+                        be
+                        because most algorithms downstream from the predictive model are implemented in a bespoke
+                        manner, or tied to a research codebase that is not optimized for general usage. To
+                        accelerate
+                        our own progress, and progress in the field, we write software with a focus on usability and
+                        adaptability so that those without our computational expertise can still make important
+                        contributions.</p>
+                    <a href="https://www.biorxiv.org/content/10.1101/2025.08.08.669296v2"
+                        target="_blank">[Tangermeme]</a>
+                    <a href="https://academic.oup.com/bioinformatics/article/41/11/btaf577/8297099"
+                        target="_blank">[Tomtom-lite]</a>
+                </div>
+                <div class="photo-filler">
+                    <img src="photos/crooks12.jpg"
+                        alt="Picture of a cat engaged in developing the scientific ecosystem.">
+                </div>
             </div>
         </main>
+
+        <footer class="site-footer">
+            <div class="footer-address">
+                Albert Sherman Center<br>
+                UMass Medical School <br>
+                55 Lake Avenue North<br>
+                Worcester, MA 01655
+            </div>
+            <a href="https://www.umassmed.edu/" target="_blank">
+                <img src="https://www.umassmed.edu/contentassets/d03ef3ad8b954c0b835e4efff6b5ba09/lightbackground_umasschanat.svg"
+                    class="footer-logo" alt="UMass Chan Medical School">
+            </a>
+        </footer>
     </div>
+    <script>
+        function decodeEmail() {
+            var links = document.querySelectorAll('.email-link');
+            links.forEach(function (link) {
+                var user = link.getAttribute('data-user');
+                var domain = link.getAttribute('data-domain');
+                if (user && domain) {
+                    var email = user + '@' + domain;
+                    link.setAttribute('href', 'mailto:' + email);
+                    if (link.innerText === '') {
+                        link.innerText = email;
+                    }
+                }
+            });
+        }
+        window.addEventListener('DOMContentLoaded', decodeEmail);
+    </script>
 </body>
+
 </html>

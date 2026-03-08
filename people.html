@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programmable Genomics Laboratory | People</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
             <div class="header-image-container">
-                 <img src="dna.png">
+                <img src="dna.png"
+                    alt="Double helix of DNA stylized to look like a pencil sketch with one nucleotide highlighted in pink to represent minimal editing.">
             </div>
             <h1>Programmable Genomics Laboratory</h1>
-            <div class="subtitle">Deep Learning • DNA Design • Regulatory Genomics</div>
+            <div class=" subtitle">Deep Learning • DNA Design • Regulatory Genomics
+            </div>
         </header>
 
         <nav>
             <a href="index.html">Home</a>
             <a href="people.html" class="active">People</a>
-            <a href="research.html">Research</a>
+            <a href="publications.html">Publications</a>
             <a href="software.html">Software</a>
+            <a href="news.html">News</a>
         </nav>
 
         <main>
@@ -28,30 +33,161 @@
                 <div class="pi-photo-container">
                     <img src="photos/jmschr.jpg" alt="Jacob Schreiber">
                 </div>
-                
+
                 <div class="pi-info">
-                    <div class="person-name" style="font-size: 1.5rem;">Dr. Jacob Schreiber</div>
-                    <div class="person-title" style="margin-bottom: 15px;">Principal Investigator</div>
-                    <p>I have over a decade of developing and applying deep learning models to genomics. My past research has included using nanopores to detect modified cytosines on individual DNA strands, large-scale imputation of epigenomics data, sequence-based predictive models for bulk and single-cell data, and design of regulatory elements. I also write about the pitfalls one can encounter when applying machine learning to genomics data and develop software.</p> 
+                    <div class="pi-header">
+                        <div class="person-name large">Dr. Jacob Schreiber</div>
+                        <div class="pi-socials">
+                            <a href="https://github.com/jmschrei" target="_blank">
+                                <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"
+                                    alt="GitHub">
+                            </a>
+                            <a href="https://x.com/jmschreiber91" target="_blank">
+                                <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/twitter/twitter-original.svg"
+                                    alt="Twitter">
+                            </a>
+                            <a href="https://bsky.app/profile/jmschreiber91.bsky.social" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg"
+                                    alt="Bluesky">
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=9Y8vHKUAAAAJ&hl=en" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Scholar_logo.svg"
+                                    alt="Google Scholar">
+                            </a>
+                            <a href="https://www.linkedin.com/in/jmschreiber91/" target="_blank">
+                                <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg"
+                                    alt="LinkedIn">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="person-title">Assistant Professor</div>
+                    <div class="person-contact">
+                        Department of Genomics and Computational Biology<br>
+                        UMass Chan Medical School<br>
+                        <a href="#" class="email-link" data-user="jacob.schreiber" data-domain="umassmed.edu"></a>
+                    </div>
+                    <p>I have over a decade of experience developing and applying deep learning models to genomics. My
+                        past research has included using nanopores to detect modified cytosines on individual DNA
+                        strands, large-scale imputation of epigenomics data, sequence-based predictive models for bulk
+                        and single-cell data, and design of regulatory elements. I also write about the pitfalls one can
+                        encounter when applying machine learning to genomics data.</p>
 
-                    <p>I did my Ph.D. at the University of Washington under Dr. William Noble, a post-doc at Stanford University under Dr. Anshul Kundaje, was a visiting scientist at the Research Institute of Molecular Pathology (IMP) in Vienna, and am now an Assistant Professor at UMass Chan Medical School.</p>
+                    <p>I did my Ph.D. at the University of Washington with
+                        <a href="https://noble.gs.washington.edu/~wnoble/">Dr. William Noble</a>, a post-doc at Stanford
+                        with <a href="https://med.stanford.edu/profiles/anshul-kundaje">Dr. Anshul
+                            Kundaje</a>, was a visiting scientist at the <a href="https://www.imp.ac.at/">Research
+                            Institute of Molecular Pathology (IMP)</a> in Vienna, and am now an Assistant Professor at
+                        UMass
+                        Chan Medical School.
+                    </p>
 
-                    <p>I run the Programmable Genomics Lab, where we develop methods for designing regulatory elements with precise and subtle properties, create more sophisticated and lighter-weight deep learning predictive models for use in this design setting, and implement usable software pipelines to get these methods working in the hands of as many scientists as possible.</p>
+                    <p>I run the Programmable Genomics Lab, where we develop methods for designing regulatory elements
+                        with precise and subtle properties, develop design-focused and light-weight deep learning
+                        models, and write usable software to get as many scientists using these methods as possible.</p>
                 </div>
             </div>
 
 
             <h2 style="margin-top: 40px;">Team</h2>
             <div class="people-grid">
-                <div class="person-card">
+                <div class="person-card" onclick="openModal('modal-ama')">
                     <div class="photo-filler">
-                        <img src="photos/ama.jpg" alt="Achsah Marlene Aruva"></div>
+                        <img src="photos/ama.jpg" alt="Achsah Marlene Aruva">
+                    </div>
                     <div class="person-name">Achsah Marlene Aruva</div>
                     <div class="person-title">Bioinformatician III</div>
                 </div>
-
             </div>
+
+            <!-- Modals -->
+            <div id="modal-ama" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modal-ama')">&times;</span>
+                    <div class="modal-body">
+                        <div class="modal-photo">
+                            <img src="photos/ama.jpg" alt="Achsah Marlene Aruva">
+                        </div>
+                        <div class="modal-info">
+                            <div class="person-name large">Achsah Marlene Aruva</div>
+                            <div class="person-title">Bioinformatician III</div>
+                            <div class="modal-socials">
+                                <a href="https://scholar.google.com/citations?user=ZATgMukAAAAJ&hl=en" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Scholar_logo.svg"
+                                        alt="Google Scholar">
+                                </a>
+                                <a href="https://bsky.app/profile/achsahmarlene.bsky.social" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg"
+                                        alt="Bluesky">
+                                </a>
+                                <a href="https://www.linkedin.com/in/achsah-marlene-aruva/" target="_blank">
+                                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg"
+                                        alt="LinkedIn">
+                                </a>
+                            </div>
+                            <p>
+                                My current work focuses on building deep learning models to understand and design
+                                genomic regulatory elements. I completed an M.S. in Biomedical Engineering
+                                (Bioinformatics and Machine Learning) at Columbia University, where I worked
+                                on modeling foregut morphogenesis and multimodal integration of single-cell omics
+                                datasets.
+                                Previously, I studied Mechanical Engineering at IIT Ropar, where I worked on modeling
+                                bone
+                                formation dynamics under mechanical stimuli. Across these diverse areas, my work has
+                                centered
+                                on using quantitative methods to understand biological systems.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
+
+        <footer class="site-footer">
+            <div class="footer-address">
+                Albert Sherman Center<br>
+                UMass Medical School <br>
+                55 Lake Avenue North<br>
+                Worcester, MA 01655
+            </div>
+            <a href="https://www.umassmed.edu/" target="_blank">
+                <img src="https://www.umassmed.edu/contentassets/d03ef3ad8b954c0b835e4efff6b5ba09/lightbackground_umasschanat.svg"
+                    class="footer-logo" alt="UMass Chan Medical School">
+            </a>
+        </footer>
     </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        function decodeEmail() {
+            var links = document.querySelectorAll('.email-link');
+            links.forEach(function (link) {
+                var user = link.getAttribute('data-user');
+                var domain = link.getAttribute('data-domain');
+                if (user && domain) {
+                    var email = user + '@' + domain;
+                    link.setAttribute('href', 'mailto:' + email);
+                    if (link.innerText === '') {
+                        link.innerText = email;
+                    }
+                }
+            });
+        }
+        window.addEventListener('DOMContentLoaded', decodeEmail);
+    </script>
 </body>
+
 </html>
