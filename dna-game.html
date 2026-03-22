@@ -287,7 +287,7 @@
             <div class="game-intro">
                 <p>
                     In the Programmatic Genomics Laboratory (PGL), we use deep learning models to predict characteristics of DNA sequences, and then use design methods to
-                    iteratively edit sequences to until the models predict our desired characteristics. Sometimes, the edits chosen by these procedures are surprising. 
+                    minimally edit sequences such that the models predict our desired characteristics. Sometimes, the edits chosen by these procedures are surprising. 
                 </p> 
                 <p>    
                     Try it yourself to build your intuition: click any
@@ -297,10 +297,11 @@
                 </p>
                 <p>
                     <strong>Objective:</strong> Maximize the score by editing the sequence to contain GATA1 binding motifs
-                    (<code>MA0035.2</code>). The score of each motif is derived from a position weight matrix (PWM) derived from
-                    JASPAR2026, with only matches above a score counting as hits. But avoid using too many edits! Each edit subtracts a point from your score.
-                    Underlined positions indicate a PWM hit with the pink
-                    bars identifying high information content positions and gray bars indicating the flanks.
+                    (<code>MA0035.2</code>). The score of each motif is calculated from a position weight matrix (PWM) derived from
+                    JASPAR2026, with only matches with high enough scores counting as hits. But, avoid using too many edits! Each edit subtracts 
+                    a point from your score, so you will need to carefully choose which ones you want to make. Motif hits will be underlined, with
+                    high information content positions being underlined in pink and low information content positions (usually the flanks) being
+                    underlined in gray.
                 </p>
                 <p>
                     What is the highest score you can get with one GATA motif? What is the highest score you can get with one edit? Did you find any unexpected ways to make the score high?
