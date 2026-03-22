@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' https://www.umassmed.edu;">
+    <title>DNA Design Game | Programmable Genomics Laboratory</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        code {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+        }
+
+        .game-intro p {
+            margin-bottom: 12px;
+        }
+
+        /* ── Sequence ─────────────────────────────────────────────────── */
+        .sequence-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted-color);
+            margin-bottom: 8px;
+        }
+
+        .dna-sequence {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 14px 18px;
+            background: #fafafa;
+            user-select: none;
+            overflow-x: auto;
+        }
+
+        .seq-row-group {
+            margin-bottom: 4px;
+        }
+
+        .seq-row {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            line-height: 2.1;
+        }
+
+        /* Annotation row: one slot per nucleotide column, labels at hit centres */
+        .seq-annotation {
+            display: flex;
+            justify-content: center;
+            height: 1em;
+            margin-top: -2px;
+        }
+
+        .annot-slot {
+            position: relative;
+            color: transparent;
+        }
+
+        .annot-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0;
+            color: var(--accent-color);
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .seq-marker {
+            position: absolute;
+            left: 0;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+
+        .nucleotide {
+            color: #aaaaaa;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: color 0.12s ease, background-color 0.1s ease;
+        }
+
+        .nucleotide.edited {
+            color: var(--accent-color);
+        }
+
+        /* Underline bars rendered via ::after so width can be inset for whitespace */
+        .nucleotide.motif-hi,
+        .nucleotide.motif-lo {
+            position: relative;
+        }
+
+        .nucleotide.motif-hi::after,
+        .nucleotide.motif-lo::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 2px;
+            right: 2px;
+            height: 2px;
+        }
+
+        .nucleotide.motif-hi::after { background-color: var(--accent-color); }
+        .nucleotide.motif-lo::after { background-color: #aaaaaa; }
+
+        .nucleotide:hover {
+            background-color: #eeeeee;
+        }
+
+        .nucleotide.edited:hover {
+            background-color: #fff0f6;
+        }
+
+        /* ── Controls ─────────────────────────────────────────────────── */
+        .sequence-controls {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            color: var(--text-color);
+        }
+
+        .btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn:active {
+            background: #fff0f6;
+        }
+
+        /* ── Neural network canvas ────────────────────────────────────── */
+        .nn-section {
+            margin: 16px 0 20px;
+        }
+
+        #nn-canvas {
+            display: block;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        /* ── Score panel ──────────────────────────────────────────────── */
+        .score-panel {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 20px 24px;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .score-main {
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 300;
+            font-family: var(--font-main);
+            color: var(--accent-color);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .score-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted-color);
+            margin-top: 4px;
+        }
+
+        .score-details {
+            flex: 1;
+        }
+
+        .score-detail-row {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted-color);
+            margin: 5px 0;
+        }
+
+        .score-detail-row span {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .progress-bar-container {
+            height: 5px;
+            background: #e8e8e8;
+            border-radius: 3px;
+            margin: 12px 0 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .motif-positions {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted-color);
+            min-height: 1em;
+        }
+
+        @media (max-width: 500px) {
+            .score-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-image-container">
+                <img src="dna.png"
+                    alt="Double helix of DNA stylized to look like a pencil sketch with one nucleotide highlighted in pink to represent minimal editing.">
+            </div>
+            <h1>Programmable Genomics Laboratory</h1>
+            <div class="subtitle">Deep Learning • DNA Design • Regulatory Genomics</div>
+        </header>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dna-game.html" class="active">Game</a>
+            <a href="people.html">People</a>
+            <a href="publications.html">Publications</a>
+            <a href="software.html">Software</a>
+            <a href="news.html">News</a>
+        </nav>
+
+        <main>
+            <div class="section-header">
+                <h2>Are you smarter than a design algorithm?</h2>
+            </div>
+
+            <div class="game-intro">
+                <p>
+                    In the Programmatic Genomics Laboratory (PGL), we use deep learning models to predict characteristics of DNA sequences, and then use design methods to
+                    iteratively edit sequences to until the models predict our desired characteristics. Sometimes, the edits chosen by these procedures are surprising. 
+                </p> 
+                <p>    
+                    Try it yourself to build your intuition: click any
+                    nucleotide below to cycle through <strong>A → C → G → T</strong> and watch the "neural network"
+                    evaluate your design in real time. Right-click any edited nucleotide to restore it to its
+                    original base, or use the "reset" button to undo all edits. <b>Note:</b> for now, there is no neural network, only a PWM scan.
+                </p>
+                <p>
+                    <strong>Objective:</strong> Maximize the score by editing the sequence to contain GATA1 binding motifs
+                    (<code>MA0035.2</code>). The score of each motif is derived from a position weight matrix (PWM) derived from
+                    JASPAR2026, with only matches above a score counting as hits. But avoid using too many edits! Each edit subtracts a point from your score.
+                    Underlined positions indicate a PWM hit with the pink
+                    bars identifying high information content positions and gray bars indicating the flanks.
+                </p>
+                <p>
+                    What is the highest score you can get with one GATA motif? What is the highest score you can get with one edit? Did you find any unexpected ways to make the score high?
+                </p>
+            </div>
+
+            <div style="margin: 24px 0;">
+                <div class="sequence-controls">
+                    <button class="btn" onclick="resetSequence()">Reset</button>
+                    <button class="btn" onclick="randomizeSequence()">Randomize</button>
+                </div>
+                <div class="sequence-label">250 bp Template Sequence — click any nucleotide to edit</div>
+                <div class="dna-sequence" id="dna-sequence"></div>
+            </div>
+
+            <div class="nn-section">
+                <div class="sequence-label">Neural network evaluation</div>
+                <canvas id="nn-canvas"></canvas>
+            </div>
+
+            <div class="score-panel">
+                <div class="score-main">
+                    <div class="score-value" id="score-value">0.00</div>
+                    <div class="score-label">Score</div>
+                </div>
+                <div class="score-details">
+                    <div class="score-detail-row">PWM hits (score ≥ <span id="hit-threshold"></span>): <span id="gataa-count">0</span></div>
+                    <div class="score-detail-row">Edited positions: <span id="edited-count">0</span> / 250</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="score-bar"></div>
+                    </div>
+                    <div class="motif-positions" id="motif-positions">No PWM hits yet — try editing toward GATAA.</div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-address">
+                Albert Sherman Center<br>
+                UMass Medical School<br>
+                55 Lake Avenue North<br>
+                Worcester, MA 01655
+            </div>
+            <a href="https://www.umassmed.edu/" target="_blank" rel="noopener noreferrer">
+                <img src="https://www.umassmed.edu/contentassets/d03ef3ad8b954c0b835e4efff6b5ba09/lightbackground_umasschanat.svg"
+                    class="footer-logo" alt="UMass Chan Medical School">
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // ─── Constants ───────────────────────────────────────────────────────────
+        const ALPHABET     = ['A', 'C', 'G', 'T'];
+        const BASE_IDX     = { A: 0, C: 1, G: 2, T: 3 };
+        const SEQ_LEN      = 250;
+        const ROW_LEN      = 50;
+        const SCORE_BAR_MAX = 100;
+        const NN_LAYERS    = [10, 8, 6, 1];
+        const ANIM_MS      = 950;
+
+        // ─── Motif: MA0035.2 Gata1 (rows = A C G T, cols = positions 1-11) ────────
+        const PFM_HEADER = '>MA0035.2 Gata1';
+        const MOTIF_NAME = PFM_HEADER.split(/\s+/).slice(1).join(' '); // → 'Gata1'
+
+        const PFM = [
+            [1423,  708, 2782,    0, 4000,   27, 3887, 3550,  799, 1432, 1487], // A
+            [ 560, 1633,   31,    0,    0,   29,    0,    4,  681,  897,  829], // C
+            [1242, 1235,   10, 4000,    0,  109,    6,  383, 2296, 1360, 1099], // G
+            [ 775,  424, 1177,    0,    0, 3835,  107,   63,  224,  311,  585], // T
+        ];
+
+        // PWM: log2(freq / 0.25) with Jeffreys pseudocount of 0.5
+        const HIT_THRESHOLD = 5;   // minimum PWM score to count as a hit
+        const IC_THRESHOLD  = 1;   // bits; positions ≥ this get a pink underline
+
+        let pwm         = null;  // pwm[base][position]
+        let pwmIC       = null;  // per-position information content (bits)
+        let pwmMaxScore = 0;     // theoretical maximum score for a single window
+
+        function buildPWM(pfm, pseudo = 0.5) {
+            const motifLen = pfm[0].length;
+            const w  = Array.from({ length: 4 }, () => new Float64Array(motifLen));
+            const ic = new Float64Array(motifLen);
+            let maxSum = 0;
+            for (let p = 0; p < motifLen; p++) {
+                const total = pfm.reduce((s, row) => s + row[p], 0) + 4 * pseudo;
+                let posMax = -Infinity;
+                let posIC  = 0;
+                for (let b = 0; b < 4; b++) {
+                    const freq = (pfm[b][p] + pseudo) / total;
+                    w[b][p] = Math.log2(freq / 0.25);
+                    posIC  += freq * Math.log2(freq / 0.25);   // IC contribution
+                    if (w[b][p] > posMax) posMax = w[b][p];
+                }
+                ic[p]  = posIC;
+                maxSum += posMax;
+            }
+            pwmIC       = ic;
+            pwmMaxScore = maxSum;
+            return w;
+        }
+
+        // Returns Float64Array of per-position PWM scores (length = seq.length - motifLen + 1)
+        function scanPWM(seq) {
+            const motifLen = pwm[0].length;
+            const n = seq.length - motifLen + 1;
+            const scores = new Float64Array(n);
+            for (let i = 0; i < n; i++) {
+                let s = 0;
+                for (let p = 0; p < motifLen; p++) s += pwm[BASE_IDX[seq[i + p]]][p];
+                scores[i] = s;
+            }
+            return scores;
+        }
+
+        // Returns array of {pos, score} for all windows with score ≥ HIT_THRESHOLD
+        function findPWMHits(seq, threshold = HIT_THRESHOLD) {
+            const scores = scanPWM(seq);
+            const hits = [];
+            for (let i = 0; i < scores.length; i++) {
+                if (scores[i] > threshold) hits.push({ pos: i, score: scores[i] });
+            }
+            return hits;
+        }
+
+        // ─── Sequence state ──────────────────────────────────────────────────────
+        let sequence = [];
+        let originalSequence = []; // snapshot taken on init/randomize; reset restores this
+        let edited = [];
+
+        function initSequence() {
+            sequence = Array.from({ length: SEQ_LEN }, () => ALPHABET[Math.floor(Math.random() * 4)]);
+            originalSequence = [...sequence];
+            edited = new Array(SEQ_LEN).fill(false);
+        }
+
+        // ─── Scoring ─────────────────────────────────────────────────────────────
+        function computeScore(seq) {
+            const scores = scanPWM(seq);
+            let pwmSum = 0;
+            for (let i = 0; i < scores.length; i++) {
+                if (scores[i] >= HIT_THRESHOLD) pwmSum += scores[i];
+            }
+            const editCount = edited.filter(Boolean).length;
+            return pwmSum - editCount;
+        }
+
+        // ─── Neural network weights (seeded random, fixed) ───────────────────────
+        let nnWeights = null;
+
+        function initWeights() {
+            let seed = 2718;
+            function rand() {
+                seed = (seed * 1664525 + 1013904223) & 0x7fffffff;
+                return (seed / 0x7fffffff) * 2 - 1;
+            }
+            nnWeights = [];
+            for (let l = 0; l < NN_LAYERS.length - 1; l++) {
+                const W = [];
+                for (let j = 0; j < NN_LAYERS[l + 1]; j++) {
+                    const row = [];
+                    for (let i = 0; i < NN_LAYERS[l]; i++) row.push(rand() * 1.8);
+                    W.push(row);
+                }
+                nnWeights.push(W);
+            }
+        }
+
+        // ─── Node color state ────────────────────────────────────────────────────
+        // Each node stores its own persistent color (gray by default, random pink after wave).
+        let nodeColors = null;
+
+        function initNodeColors() {
+            nodeColors = NN_LAYERS.map(count => Array(count).fill('#cccccc'));
+        }
+
+        // Maps a score (0 = light gray, BIN_SCORE_MAX = hot pink) to a CSS color.
+        const BIN_SCORE_MAX = 10;
+        function scoreToColor(score) {
+            const t = Math.min(Math.max(score, 0) / BIN_SCORE_MAX, 1);
+            return `hsl(330, ${Math.round(t * 100)}%, ${Math.round(80 - t * 15)}%)`;
+        }
+
+        // Random color along the gray-to-hot-pink ramp (for hidden layers).
+        function randomGrayToPinkShade() {
+            const t = Math.random();
+            return `hsl(330, ${Math.round(t * 100)}%, ${Math.round(80 - t * 15)}%)`;
+        }
+
+        // Per-bin PWM scores for the 10 input neurons (one neuron per 25 bp window).
+        function computeBinScores() {
+            const numBins = NN_LAYERS[0];           // 10
+            const binSize = SEQ_LEN / numBins;      // 25 bp
+            const scores  = scanPWM(sequence);
+            const binScores = new Float64Array(numBins);
+            for (let i = 0; i < scores.length; i++) {
+                if (scores[i] >= HIT_THRESHOLD) {
+                    binScores[Math.min(Math.floor(i / binSize), numBins - 1)] += scores[i];
+                }
+            }
+            return binScores;
+        }
+
+        // ─── DOM rendering ───────────────────────────────────────────────────────
+        function renderSequence() {
+            const container = document.getElementById('dna-sequence');
+            container.innerHTML = '';
+
+            const motifLen = pwm[0].length;
+            const hits     = findPWMHits(sequence);
+
+            // Build IC underline sets (high IC wins if a position is covered by
+            // overlapping hits with different IC classifications).
+            const hiICSet = new Set();
+            const loICSet = new Set();
+            hits.forEach(({ pos }) => {
+                for (let k = 0; k < motifLen; k++) {
+                    if (pwmIC[k] >= IC_THRESHOLD) {
+                        hiICSet.add(pos + k);
+                        loICSet.delete(pos + k);
+                    } else if (!hiICSet.has(pos + k)) {
+                        loICSet.add(pos + k);
+                    }
+                }
+            });
+
+            // Map each row to the column of each hit's centre position
+            const midCol = Math.floor(motifLen / 2);
+            const hitMidByRow = {};
+            hits.forEach(({ pos }) => {
+                const midPos = pos + midCol;
+                const r = Math.floor(midPos / ROW_LEN);
+                const c = midPos % ROW_LEN;
+                if (!hitMidByRow[r]) hitMidByRow[r] = [];
+                hitMidByRow[r].push(c);
+            });
+
+            const numRows = SEQ_LEN / ROW_LEN;
+            for (let row = 0; row < numRows; row++) {
+                const group = document.createElement('div');
+                group.className = 'seq-row-group';
+
+                // ── Nucleotide row ──────────────────────────────────────────
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'seq-row';
+
+                const marker = document.createElement('span');
+                marker.className = 'seq-marker';
+                marker.textContent = `${(row + 1) * ROW_LEN}-`;
+                rowDiv.appendChild(marker);
+
+                for (let col = 0; col < ROW_LEN; col++) {
+                    const i = row * ROW_LEN + col;
+                    const span = document.createElement('span');
+                    let cls = 'nucleotide';
+                    if (edited[i])      cls += ' edited';
+                    if (hiICSet.has(i)) cls += ' motif-hi';
+                    else if (loICSet.has(i)) cls += ' motif-lo';
+                    span.className = cls;
+                    span.textContent = sequence[i];
+                    span.title = `Position ${i + 1}`;
+                    span.addEventListener('click', () => cycleNucleotide(i));
+                    span.addEventListener('contextmenu', e => { e.preventDefault(); restoreNucleotide(i); });
+                    rowDiv.appendChild(span);
+                }
+                group.appendChild(rowDiv);
+
+                // ── Annotation row: motif name labels at each hit start ─────
+                const annotDiv = document.createElement('div');
+                annotDiv.className = 'seq-annotation';
+                const rowHitCols = new Set(hitMidByRow[row] || []);
+                for (let col = 0; col < ROW_LEN; col++) {
+                    const slot = document.createElement('span');
+                    slot.className = 'annot-slot';
+                    slot.textContent = sequence[row * ROW_LEN + col]; // real char ensures same rendered width as nucleotide span
+                    if (rowHitCols.has(col)) {
+                        const label = document.createElement('span');
+                        label.className = 'annot-label';
+                        label.textContent = MOTIF_NAME;
+                        slot.appendChild(label);
+                    }
+                    annotDiv.appendChild(slot);
+                }
+                group.appendChild(annotDiv);
+
+                container.appendChild(group);
+            }
+        }
+
+        function updateStats() {
+            const score      = computeScore(sequence);
+            const hits       = findPWMHits(sequence);
+            const editedCount = edited.filter(Boolean).length;
+
+            document.getElementById('score-value').textContent = score.toFixed(1);
+            document.getElementById('gataa-count').textContent = hits.length;
+            document.getElementById('edited-count').textContent = editedCount;
+            document.getElementById('score-bar').style.width =
+                `${Math.min(Math.max(0, score) / SCORE_BAR_MAX * 100, 100)}%`;
+            document.getElementById('motif-positions').textContent =
+                hits.length > 0
+                    ? `Hit positions: ${hits.map(h => h.pos + 1).join(', ')}`
+                    : 'No PWM hits yet — try editing toward GATAA.';
+        }
+
+        // ─── Interaction ─────────────────────────────────────────────────────────
+        function cycleNucleotide(i) {
+            sequence[i] = ALPHABET[(ALPHABET.indexOf(sequence[i]) + 1) % 4];
+            edited[i] = true;
+            renderSequence();
+            updateStats();
+            triggerAnimation();
+        }
+
+        function restoreNucleotide(i) {
+            if (!edited[i]) return; // nothing to restore
+            sequence[i] = originalSequence[i];
+            edited[i] = false;
+            renderSequence();
+            updateStats();
+            triggerAnimation();
+        }
+
+        function resetSequence() {
+            // Restore the original sequence and clear all edits
+            sequence = [...originalSequence];
+            edited = new Array(SEQ_LEN).fill(false);
+            initNodeColors();
+            renderSequence();
+            updateStats();
+            triggerAnimation();
+        }
+
+        function randomizeSequence() {
+            sequence = Array.from({ length: SEQ_LEN }, () => ALPHABET[Math.floor(Math.random() * 4)]);
+            originalSequence = [...sequence]; // new baseline for this randomized sequence
+            edited = new Array(SEQ_LEN).fill(false);
+            initNodeColors();
+            renderSequence();
+            updateStats();
+            triggerAnimation();
+        }
+
+        // ─── Canvas setup ────────────────────────────────────────────────────────
+        const canvas = document.getElementById('nn-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let logW = 0;
+        const logH = 300;
+
+        function setupCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            logW = canvas.parentElement.clientWidth;
+            canvas.width  = Math.round(logW * dpr);
+            canvas.height = Math.round(logH * dpr);
+            canvas.style.width  = logW + 'px';
+            canvas.style.height = logH + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        // ─── Node / layer geometry (vertical layout: input top, output bottom) ───
+        const PAD_LEFT   = 62;  // room for layer labels
+        const PAD_RIGHT  = 18;
+        const PAD_TOP    = 28;
+        const PAD_BOTTOM = 28;
+
+        function nodeX(li, ni) {
+            const avail = logW - PAD_LEFT - PAD_RIGHT;
+            return PAD_LEFT + ((ni + 0.5) / NN_LAYERS[li]) * avail;
+        }
+
+        function layerY(li) {
+            const avail = logH - PAD_TOP - PAD_BOTTOM;
+            return PAD_TOP + (li / (NN_LAYERS.length - 1)) * avail;
+        }
+
+        // ─── Animation state ─────────────────────────────────────────────────────
+        let animId    = null;
+        let animStart = null;
+        // layerHitRaw[l] = raw-progress value when layer l was first hit (-1 = not yet)
+        let layerHitRaw = new Array(NN_LAYERS.length).fill(-1);
+
+        function triggerAnimation() {
+            // Reset wave state but keep existing node colors (they'll be overwritten as
+            // the wave sweeps through).
+            layerHitRaw = new Array(NN_LAYERS.length).fill(-1);
+            if (animId) cancelAnimationFrame(animId);
+            animStart = performance.now();
+            runAnim();
+        }
+
+        function runAnim() {
+            const elapsed = performance.now() - animStart;
+            const raw = Math.min(elapsed / ANIM_MS, 1);
+
+            // Wave front: layers activate at evenly-spaced raw times, finishing at 0.80
+            // so the pulse animation (18% of raw range) always completes before raw=1.
+            for (let l = 0; l < NN_LAYERS.length; l++) {
+                const activationRaw = (l / (NN_LAYERS.length - 1)) * 0.78;
+                if (raw >= activationRaw && layerHitRaw[l] < 0) {
+                    layerHitRaw[l] = raw;
+                    if (l === 0) {
+                        // Input layer: each neuron reflects its 25 bp bin's PWM score
+                        const binScores = computeBinScores();
+                        for (let n = 0; n < NN_LAYERS[0]; n++) {
+                            nodeColors[0][n] = scoreToColor(binScores[n]);
+                        }
+                    } else if (l === NN_LAYERS.length - 1) {
+                        // Output layer: reflects overall score on the same scale
+                        nodeColors[l][0] = scoreToColor(Math.max(0, computeScore(sequence)));
+                    } else {
+                        // Hidden layers: random position on the gray-to-hot-pink ramp
+                        for (let n = 0; n < NN_LAYERS[l]; n++) {
+                            nodeColors[l][n] = randomGrayToPinkShade();
+                        }
+                    }
+                }
+            }
+
+            drawNN(raw);
+
+            if (raw < 1) {
+                animId = requestAnimationFrame(runAnim);
+            } else {
+                animId = null;
+            }
+        }
+
+        // ─── Draw ────────────────────────────────────────────────────────────────
+        function drawNN(raw) {
+            ctx.clearRect(0, 0, logW, logH);
+
+            const score = computeScore(sequence);
+
+            // ── Edges ──
+            for (let l = 0; l < NN_LAYERS.length - 1; l++) {
+                for (let i = 0; i < NN_LAYERS[l]; i++) {
+                    for (let j = 0; j < NN_LAYERS[l + 1]; j++) {
+                        const x0 = nodeX(l,     i);
+                        const y0 = layerY(l);
+                        const x1 = nodeX(l + 1, j);
+                        const y1 = layerY(l + 1);
+
+                        ctx.beginPath();
+                        ctx.moveTo(x0, y0);
+                        ctx.lineTo(x1, y1);
+
+                        ctx.strokeStyle = 'rgba(190, 190, 190, 0.25)';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // ── Nodes ──
+            for (let l = 0; l < NN_LAYERS.length; l++) {
+                const isOutput = l === NN_LAYERS.length - 1;
+                const baseR    = isOutput ? 18 : 10;
+                const hitRaw   = layerHitRaw[l];
+
+                for (let n = 0; n < NN_LAYERS[l]; n++) {
+                    const x     = nodeX(l, n);
+                    const y     = layerY(l);
+                    const color = nodeColors[l][n];
+
+                    // Pulse: brief scale-up right when the wave hits this layer
+                    let r = baseR;
+                    if (hitRaw >= 0) {
+                        const elapsed = raw - hitRaw;
+                        if (elapsed < 0.18) {
+                            r = baseR * (1 + 0.45 * Math.sin((elapsed / 0.18) * Math.PI));
+                        }
+                    }
+
+                    // Node fill
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+
+                    // Node stroke (slightly darker than fill)
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = hitRaw >= 0 ? color : '#bbbbbb';
+                    ctx.stroke();
+
+                    // Score text inside output node
+                    if (isOutput) {
+                        ctx.font = 'bold 12px "Helvetica Neue", Arial, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        // Use dark text — all colors on the gray-to-hot-pink ramp are light enough
+                        ctx.fillStyle = hitRaw >= 0 ? '#333333' : '#888888';
+                        ctx.fillText(score.toFixed(1), x, y);
+                    }
+                }
+            }
+
+            // ── Layer labels (left margin) ──
+            const labels = ['Input', 'Hidden', 'Hidden', 'Output'];
+            ctx.font = '10px "Courier New", Courier, monospace';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let l = 0; l < NN_LAYERS.length; l++) {
+                ctx.fillStyle = layerHitRaw[l] >= 0
+                    ? 'rgba(255, 105, 180, 0.85)'
+                    : '#bbbbbb';
+                ctx.fillText(labels[l], PAD_LEFT - 6, layerY(l));
+            }
+        }
+
+        // ─── Init ────────────────────────────────────────────────────────────────
+        window.addEventListener('DOMContentLoaded', () => {
+            initWeights();
+            pwm = buildPWM(PFM);
+            document.getElementById('hit-threshold').textContent = HIT_THRESHOLD;
+            initSequence();
+            initNodeColors();
+            renderSequence();
+            updateStats();
+            // rAF ensures layout is computed before we read clientWidth
+            requestAnimationFrame(() => {
+                setupCanvas();
+                triggerAnimation();
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            setupCanvas();
+            // Redraw at final state without re-triggering the wave
+            drawNN(1);
+        });
+    </script>
+</body>
+
+</html>
